@@ -34,6 +34,7 @@
 <main>
 
   <section id="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-inner">
       <img src="logo.png" alt="IID Consulting" class="hero-logo">
       <h1>Independent Identically<br> Distributed Consulting</h1>
@@ -105,10 +106,99 @@
 </footer>
 
 <script>
+  // Nav shadow on scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
+
+  // Animated Gaussian curves
+  (function () {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const CREAM = '#F7F4F0';
+    const CURVES = [
+      { color: 'rgba(72, 120, 168, 0.5)',  speed: -21 },
+      { color: 'rgba(60, 107, 78,  0.5)',  speed: -28 },
+      { color: 'rgba(196, 78, 56,  0.5)',  speed: -24.5 },
+    ];
+
+    let positions;
+    let lastTime = null;
+    let rafId;
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      if (!positions) {
+        positions = [0.25, 0.50, 0.75].map(p => p * canvas.width);
+      }
+    }
+
+    function drawBell(cx) {
+      const w = canvas.width, h = canvas.height;
+      const sigma     = w * 0.13;
+      const amplitude = h * 0.58;
+      const extent    = sigma * 5;
+      const steps     = 250;
+
+      ctx.beginPath();
+      ctx.moveTo(cx - extent, h);
+      for (let i = 0; i <= steps; i++) {
+        const x = cx - extent + extent * 2 * (i / steps);
+        const y = h - amplitude * Math.exp(-((x - cx) ** 2) / (2 * sigma ** 2));
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(cx + extent, h);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = CREAM;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.globalCompositeOperation = 'multiply';
+      CURVES.forEach((curve, i) => {
+        ctx.fillStyle = curve.color;
+        const x = ((positions[i] % w) + w) % w;
+        drawBell(x);
+        drawBell(x - w);
+        drawBell(x + w);
+      });
+    }
+
+    function animate(ts) {
+      if (lastTime === null) lastTime = ts;
+      const dt = Math.min((ts - lastTime) / 1000, 0.05);
+      lastTime = ts;
+      CURVES.forEach((c, i) => { positions[i] += c.speed * dt; });
+      draw();
+      rafId = requestAnimationFrame(animate);
+    }
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function start() {
+      resize();
+      if (reduced.matches) { draw(); return; }
+      rafId = requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(rafId);
+      lastTime = null;
+      resize();
+      if (!reduced.matches) rafId = requestAnimationFrame(animate);
+    }, { passive: true });
+
+    start();
+  }());
 </script>
 
 </body>
