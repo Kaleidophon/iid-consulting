@@ -151,7 +151,7 @@
     function drawBell(cx) {
       const w = canvas.width, h = canvas.height;
       const sigma     = Math.max(w * 0.13, h * 0.09);
-      const amplitude = h * 0.58;
+      const amplitude = h * (w < 768 ? 0.41 : 0.58);
       const extent    = sigma * 5;
       const steps     = 250;
 
