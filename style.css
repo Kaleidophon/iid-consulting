@@ -157,7 +157,6 @@ a:hover {
   width: 140px;
   height: auto;
   margin-bottom: 36px;
-  mix-blend-mode: multiply;
 }
 
 #hero h1 {
@@ -314,6 +313,53 @@ section h2 {
   font-weight: 300;
 }
 
+/* === Credentials === */
+#credentials {
+  background: var(--white);
+}
+
+.credentials-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  margin-top: 8px;
+  justify-content: space-between;
+}
+
+.cred-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cred-num {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: 1;
+  color: var(--terracotta);
+  letter-spacing: -0.02em;
+}
+
+.cred-label {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.cred-link {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--blue);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  margin-top: 2px;
+}
+
+.cred-link:hover {
+  text-decoration: underline;
+}
+
 /* === Contact === */
 #contact {
   background: var(--white);
@@ -408,6 +454,11 @@ footer {
   .services-grid {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .credentials-grid {
+    flex-wrap: wrap;
+    gap: 32px 48px;
   }
 
 
