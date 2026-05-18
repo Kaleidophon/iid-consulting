@@ -8,8 +8,10 @@
   <meta property="og:description" content="Expert research and development in AI, ML &amp; NLP.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://iidconsulting.eu">
+  <meta property="og:image" content="https://iidconsulting.eu/img/logo.png">
   <title>IID Consulting</title>
-  <link rel="icon" type="image/png" href="logo_zoomed.png">
+  <link rel="icon" type="image/png" href="img/logo_zoomed.png">
+  <link rel="apple-touch-icon" href="img/logo_zoomed.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap">
@@ -23,7 +25,7 @@
     "@type": "ProfessionalService",
     "name": "IID Consulting",
     "url": "https://iidconsulting.eu",
-    "logo": "https://iidconsulting.eu/logo.png",
+    "logo": "https://iidconsulting.eu/img/logo.png",
     "description": "Expert research and development in artificial intelligence, machine learning, and natural language processing.",
     "email": "contact@iidconsulting.eu",
     "address": {
@@ -50,12 +52,19 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#" class="nav-brand">
-      <img src="logo_transparent.png" alt="IID Consulting" class="nav-logo">
+      <img src="img/logo_transparent.png" alt="IID Consulting" class="nav-logo">
       <span class="nav-name">IID Consulting</span>
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
+      <li class="nav-has-dropdown">
+          <a href="#services">Services</a>
+          <ul class="nav-dropdown">
+            <li><a href="research-consulting.html">Research Consulting</a></li>
+            <li><a href="model-development.html">Model Development</a></li>
+            <li><a href="technical-advisory.html">Technical Advisory</a></li>
+          </ul>
+        </li>
       <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
     </ul>
   </div>
@@ -66,9 +75,9 @@
   <section id="hero">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-inner">
-      <img src="logo_transparent.png" alt="IID Consulting" class="hero-logo">
+      <img src="img/logo_transparent.png" alt="IID Consulting" class="hero-logo">
       <h1>Independent Identically<br> Distributed Consulting</h1>
-      <p class="hero-sub">Deep Expertise in Artificial Intelligence:<br> From Machine Learning &amp; Natural Language Processing to Generative and Agentic AI</p>
+      <p class="hero-sub"><span>Machine Learning</span><span> · </span><span>Natural Language Processing</span><span> · </span><span>Generative AI</span><span> · </span><span>Agentic AI</span></p>
       <a href="#contact" class="btn">Get in touch</a>
     </div>
   </section>
@@ -79,7 +88,7 @@
       <h2>No hype, just the best solution to your problem.</h2>
       <div class="about-text">
         <p>
-          IID Consulting combines deep research expertise with industry experience and goal-oriented pragmatism to tackle real-world problems effectively.
+          Independent Identically Distributed (IID) Consulting combines deep research expertise with industry experience and goal-oriented pragmatism to tackle real-world problems effectively.
           Whether classical machine learning or cutting-edge generative AI — the focus is always on genuine depth, not off-the-shelf solutions.
         </p>
         <p>
@@ -99,16 +108,19 @@
           <span class="service-num">01</span>
           <h3>Research Consulting</h3>
           <p>Problem formulation, literature review, experimental design, and rigorous analysis for AI and NLP research challenges.</p>
+          <a href="research-consulting.html" class="service-link">Learn more →</a>
         </div>
         <div class="service-card" style="--accent: var(--green)">
           <span class="service-num">02</span>
           <h3>Model Development</h3>
-          <p>Building and evaluating custom NLP and machine learning models — from initial prototype to a validated, well-understood system.</p>
+          <p>Building and evaluating custom NLP and machine learning models to custom generative and agentic pipelines — from initial prototype to a validated, well-understood system.</p>
+          <a href="model-development.html" class="service-link">Learn more →</a>
         </div>
         <div class="service-card" style="--accent: var(--terracotta)">
           <span class="service-num">03</span>
           <h3>Technical Advisory</h3>
           <p>Expert review of AI approaches, methodology critique, and guidance on complex modelling decisions and research directions.</p>
+          <a href="technical-advisory.html" class="service-link">Learn more →</a>
         </div>
         <div class="service-card" style="--accent: var(--muted)">
           <span class="service-num">04</span>
@@ -179,6 +191,22 @@
 </footer>
 
 <script>
+  // Services dropdown toggle for touch devices
+  document.querySelectorAll('.nav-has-dropdown').forEach(item => {
+    item.querySelector('a').addEventListener('click', e => {
+      if (!window.matchMedia('(hover: hover)').matches) {
+        e.preventDefault();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-has-dropdown').forEach(el => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-has-dropdown'))
+      document.querySelectorAll('.nav-has-dropdown').forEach(el => el.classList.remove('open'));
+  });
+
   // Nav shadow on scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

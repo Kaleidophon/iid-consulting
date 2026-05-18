@@ -123,6 +123,65 @@ a:hover {
   font-weight: 500 !important;
 }
 
+.nav-has-dropdown {
+  position: relative;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  list-style: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(43, 37, 32, 0.10);
+  padding: 16px 6px 6px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.nav-has-dropdown:hover .nav-dropdown,
+.nav-has-dropdown.open .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 480px) {
+  .nav-dropdown {
+    left: auto;
+    right: -8px;
+    transform: translateY(-6px);
+  }
+  .nav-has-dropdown:hover .nav-dropdown,
+  .nav-has-dropdown.open .nav-dropdown {
+    transform: translateY(0);
+  }
+}
+
+.nav-dropdown a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--muted);
+  border-radius: 5px;
+  white-space: nowrap;
+  transition: background 0.12s, color 0.12s;
+}
+
+.nav-dropdown a:hover {
+  background: var(--cream);
+  color: var(--text);
+  text-decoration: none;
+}
+
 .nav-cta:hover {
   color: #ad4130 !important;
 }
@@ -171,10 +230,35 @@ a:hover {
 
 .hero-sub {
   font-size: clamp(15px, 2.5vw, 18px);
-  color: var(--text);
+  background: linear-gradient(90deg, #1e4a78 0%, #1a3d28 55%, #7a2015 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-weight: 300;
   margin-bottom: 40px;
   line-height: 1.65;
+}
+
+@keyframes hero-term-in {
+  from { opacity: 0; filter: blur(6px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+.hero-sub span {
+  opacity: 0;
+  animation: hero-term-in 0.55s ease forwards;
+}
+
+.hero-sub span:nth-child(1) { animation-delay: 0.15s; }
+.hero-sub span:nth-child(2) { animation-delay: 0.40s; }
+.hero-sub span:nth-child(3) { animation-delay: 0.40s; }
+.hero-sub span:nth-child(4) { animation-delay: 0.65s; }
+.hero-sub span:nth-child(5) { animation-delay: 0.65s; }
+.hero-sub span:nth-child(6) { animation-delay: 0.90s; }
+.hero-sub span:nth-child(7) { animation-delay: 0.90s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-sub span { opacity: 1; animation: none; filter: none; }
 }
 
 /* === Buttons === */
@@ -311,6 +395,22 @@ section h2 {
   color: var(--muted);
   line-height: 1.7;
   font-weight: 300;
+}
+
+.service-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent, var(--blue));
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: opacity 0.15s;
+}
+
+.service-link:hover {
+  opacity: 0.75;
+  text-decoration: none;
 }
 
 /* === Credentials === */
